@@ -20,6 +20,13 @@ module.exports = {
                     filename: 'assets/fonts/[name].[ext]'
                 }
             },
+            {
+                test: /\.ico$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/images/favicon/[name].[ext]'
+                }
+            }
         ]
     }
 }
