@@ -7,13 +7,14 @@ export default class ChessMaster {
     this.yKnightMoves = [-1, 1, -2, 2, -2, 2, -1, 1]
   }
 
-  // Takes the position of the cell and returns all the possible knight moves as an array
+  // Takes the position of the specified cell and returns all the possible knight moves as an array
   findAllMoves(x, y) {
     const knightsArray = []
     for (let i = 0; this.xKnightMoves.length > i; i += 1) {
-      for (let j = 0; this.yKnightMoves.length > j; j += 1) {
-        knightsArray.push([x + this.xKnightMoves[i], y + this.yKnightsMoves[j]])
-      }
+      const xPos = x + this.xKnightMoves[i]
+      const yPos = y + this.yKnightMoves[i]
+      const newMove = [xPos, yPos]
+      knightsArray.push(newMove)
     }
     return knightsArray
   }
@@ -22,3 +23,4 @@ export default class ChessMaster {
     console.log(this.findAllMoves(x, y))
   }
 }
+// Create an adjacency board with createKnightMoveMatrix using findAllMoves as an object?
