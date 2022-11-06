@@ -22,7 +22,3 @@ export default class ChessMaster {
     console.log(this.findAllMoves(x, y))
   }
 }
-
-const master = new ChessMaster()
-
-master.createKnightMoveMatrix(3, 3)
