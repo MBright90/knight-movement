@@ -33,7 +33,6 @@ export default class ChessMaster {
         this.knightMoveMatrix[`${i}${j}`] = this.findAllMoves(i, j)
       }
     }
-    console.log(this.knightMoveMatrix)
   }
 }
 // Create an adjacency board with createKnightMoveMatrix using findAllMoves as an object?
