@@ -24,7 +24,7 @@ export default class ChessMaster {
   }
 
   // Takes this.boardSize and creates an object, with cell coordinates as keys and an array of
-  // possible knight moves as values
+  // possible knight moves as values; stored as this.knightMoveMatrix
   resetKnightMoveMatrix() {
     this.knightMoveMatrix = {}
     const boardLength = Math.sqrt(this.boardSize)
