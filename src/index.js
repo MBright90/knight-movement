@@ -1,3 +1,4 @@
+import './modules/utilities/indexDom'
 import ChessMaster from './modules/chessMaster/chessMaster'
 import './styles/style.css'
 
