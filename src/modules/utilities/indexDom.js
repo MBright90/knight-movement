@@ -12,7 +12,7 @@ const dom = (() => {
     return newElement
   }
 
-  HTMLElement.prototype.appendChildren = function appendChildren(children) {
+  HTMLElement.prototype.appendChildren = function appendChildren(...children) {
     children.forEach((child) => this.appendChild(child))
     return this
   }
@@ -29,6 +29,35 @@ const dom = (() => {
   mainDiv.appendChild(chessboardDiv)
 
   displayWrapper.appendChildren(pageHeaderDiv, mainDiv)
+
+  // Set of functions to create a new, resized chessboard
+  function removeChessBoard() {
+    const currentBoard = document.querySelector('.chessboard > div')
+    if (currentBoard) currentBoard.remove()
+  }
+
+  function createChessBoard(boardSize) {
+    const boardLength = Math.sqrt(boardSize)
+    const cellContainer = document.createElement('div')
+    for (let row = 0; row < boardSize; row += 1) {
+      for (let col = 0; col < boardLength; col += 1) {
+        const cell = createClassElement('div', 'chessCell')
+        cell.dataset.xPos = row
+        cell.dataset.yPos = col
+        cellContainer.appendChild(cell)
+      }
+    }
+    chessboardDiv.appendChild(cellContainer)
+  }
+
+  function createNewBoard(boardSize) {
+    removeChessBoard()
+    createChessBoard(boardSize)
+  }
+
+  return {
+    createNewBoard,
+  }
 })()
 
 export default { dom }
