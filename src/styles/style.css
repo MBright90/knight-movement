@@ -30,11 +30,13 @@ header {
     background-color: red;
     height: 0;
     padding-top: 100%;
+    position: relative;
     width: min(90vw, 90vh);
 }
 
 .chessboard > div {
-    background-color: blue;
     height: 100%;
+    position: absolute;
+    top: 0;
     width: 100%;
 }
