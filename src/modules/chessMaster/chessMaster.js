@@ -35,4 +35,3 @@ export default class ChessMaster {
     }
   }
 }
-// Create an adjacency board with createKnightMoveMatrix using findAllMoves as an object?
