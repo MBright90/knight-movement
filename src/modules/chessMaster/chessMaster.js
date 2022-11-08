@@ -34,4 +34,14 @@ export default class ChessMaster {
       }
     }
   }
+
+  // Setter functions
+  setBoardSize(newSize) {
+    this.boardSize = newSize
+  }
+
+  // Getter functions
+  getBoardSize() {
+    return this.boardSize
+  }
 }
