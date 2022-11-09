@@ -12,6 +12,11 @@ const dom = (() => {
     return newElement
   }
 
+  function setChessboardGrid(element, boardLength) {
+    element.style.gridTemplateColumns = `repeat(${boardLength}, 1fr)`
+    element.style.gridTemplateRows = `repeat(${boardLength}, 1fr)`
+  }
+
   HTMLElement.prototype.appendChildren = function appendChildren(...children) {
     children.forEach((child) => this.appendChild(child))
     return this
@@ -38,14 +43,18 @@ const dom = (() => {
   }
 
   function createChessBoard(boardSize) {
+    const blackCellStyle = 'background-color: black; color: white;'
     const boardLength = Math.sqrt(boardSize)
     const cellContainer = document.createElement('div')
+    setChessboardGrid(cellContainer, boardLength)
     for (let row = 0; row < boardLength; row += 1) {
       for (let col = 0; col < boardLength; col += 1) {
-        const cell = createClassElement('div', 'chessCell')
+        const cell = createClassElement('div', 'chess-cell')
         cell.dataset.xPos = row
         cell.dataset.yPos = col
         cellContainer.appendChild(cell)
+        if (row % 2 === 0 && col % 2 === 0) cell.style = blackCellStyle
+        else if (row % 2 !== 0 && col % 2 !== 0) cell.style = blackCellStyle
       }
     }
     chessboardDiv.appendChild(cellContainer)
