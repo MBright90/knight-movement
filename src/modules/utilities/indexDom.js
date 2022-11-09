@@ -29,6 +29,7 @@ const dom = (() => {
   mainDiv.appendChild(chessboardDiv)
 
   displayWrapper.appendChildren(pageHeaderDiv, mainDiv)
+  document.body.appendChild(displayWrapper)
 
   // Set of functions to create a new, resized chessboard
   function removeChessBoard() {
@@ -39,7 +40,7 @@ const dom = (() => {
   function createChessBoard(boardSize) {
     const boardLength = Math.sqrt(boardSize)
     const cellContainer = document.createElement('div')
-    for (let row = 0; row < boardSize; row += 1) {
+    for (let row = 0; row < boardLength; row += 1) {
       for (let col = 0; col < boardLength; col += 1) {
         const cell = createClassElement('div', 'chessCell')
         cell.dataset.xPos = row
