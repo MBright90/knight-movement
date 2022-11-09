@@ -16,7 +16,7 @@ export default class ChessMaster {
     for (let i = 0; i < this.xKnightMoves.length; i += 1) {
       const xPos = x + this.xKnightMoves[i]
       const yPos = y + this.yKnightMoves[i]
-      // Check the new x and new y positions are within bounds of chessBoard
+      // Check the new x and new y positions are within bounds of the current chessBoard
       if (xPos < upperBound && xPos >= 0 && yPos < upperBound && yPos >= 0) {
         knightsArray.push([xPos, yPos])
       }
@@ -34,7 +34,6 @@ export default class ChessMaster {
         moveObject[`${i}${j}`] = this.#findAllMoves(i, j)
       }
     }
-    console.log(moveObject)
     return moveObject
   }
 
