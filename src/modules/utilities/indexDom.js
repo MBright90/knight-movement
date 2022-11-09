@@ -43,10 +43,11 @@ const dom = (() => {
   }
 
   function createChessBoard(boardSize) {
-    const blackCellStyle = 'background-color: black; color: white;'
+    const blackCellStyle = 'background-color: #000;'
     const boardLength = Math.sqrt(boardSize)
     const cellContainer = document.createElement('div')
     setChessboardGrid(cellContainer, boardLength)
+
     for (let row = 0; row < boardLength; row += 1) {
       for (let col = 0; col < boardLength; col += 1) {
         const cell = createClassElement('div', 'chess-cell')
@@ -65,8 +66,21 @@ const dom = (() => {
     createChessBoard(boardSize)
   }
 
+  // Functions to add and remove knight image
+  function addBackgroundKnight(event) {
+    if (!event.target.style.backgroundColor) event.target.style.backgroundImage = 'url("./assets/images/knight-black.svg")'
+    else event.target.style.backgroundImage = 'url("./assets/images/knight-white.svg")'
+  }
+
+  function removeBackgroundKnight(event) {
+    event.target.style.backgroundImage = 'none'
+  }
+
   return {
     createNewBoard,
+
+    addBackgroundKnight,
+    removeBackgroundKnight,
   }
 })()
 
