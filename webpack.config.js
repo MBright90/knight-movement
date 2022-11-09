@@ -20,7 +20,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(woff|woff2|ttf)$/i,
+                test: /\.(woff|woff2|otf|ttf)$/i,
                 type: 'asset/resource',
                 generator: {
                     filename: 'assets/fonts/[name].[ext]'
