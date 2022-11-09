@@ -60,4 +60,4 @@ const dom = (() => {
   }
 })()
 
-export default { dom }
+export default dom
