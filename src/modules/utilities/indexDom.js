@@ -36,6 +36,11 @@ const dom = (() => {
   displayWrapper.appendChildren(pageHeaderDiv, mainDiv)
   document.body.appendChild(displayWrapper)
 
+  // Function to change text content of h1
+  function changeText(text) {
+    pageHeader.textContent = text
+  }
+
   // Set of functions to create a new, resized chessboard
   function removeChessBoard() {
     const currentBoard = document.querySelector('.chessboard > div')
@@ -76,9 +81,10 @@ const dom = (() => {
     event.target.style.backgroundImage = 'none'
   }
 
+  // Return functions
   return {
     createNewBoard,
-
+    changeText,
     addBackgroundKnight,
     removeBackgroundKnight,
   }
