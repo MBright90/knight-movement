@@ -22,12 +22,35 @@ const dom = (() => {
     return this
   }
 
+  // #####################
   // Initiating dom script
+  // #####################
   const displayWrapper = createClassElement('div', 'display-wrapper')
 
   const pageHeaderDiv = document.createElement('header')
+
+  const boardSelectorDiv = createClassElement('div', 'board-size-div')
+  const boardSizeLabel = createTextElement('p', 'Board Size')
+  const boardSizeInput = document.createElement('select')
+
+  // Create drop down size menu
+  const inputOptionElements = []
+  const boardSizeOptions = ['16', '25', '36', '49', '64 (Standard)', '91', '100']
+  boardSizeOptions.forEach((size) => {
+    const newOption = createTextElement('option', size)
+    newOption.setAttribute('value', parseInt(size.split(' ')[0], 10))
+    inputOptionElements[inputOptionElements.length] = newOption
+  })
+  inputOptionElements.forEach((element) => boardSizeInput.appendChild(element))
+  boardSelectorDiv.appendChildren(boardSizeLabel, boardSizeInput)
+
   const pageHeader = createTextElement('h1', 'Place Your Knight')
-  pageHeaderDiv.appendChild(pageHeader)
+
+  const resetButtonContainer = createClassElement('div', 'reset-button-container')
+  const resetButton = createTextElement('button', 'Reset')
+  resetButtonContainer.appendChild(resetButton)
+
+  pageHeaderDiv.appendChildren(boardSelectorDiv, pageHeader, resetButtonContainer)
 
   const mainDiv = document.createElement('main')
   const chessboardDiv = createClassElement('div', 'chessboard')
@@ -41,7 +64,9 @@ const dom = (() => {
     pageHeader.textContent = text
   }
 
+  // ####################################################
   // Set of functions to create a new, resized chessboard
+  // ####################################################
   function removeChessBoard() {
     const currentBoard = document.querySelector('.chessboard > div')
     if (currentBoard) currentBoard.remove()
@@ -71,7 +96,9 @@ const dom = (() => {
     createChessBoard(boardSize)
   }
 
-  // Functions to add and remove knight image
+  // ###############################################
+  // Functions to add and remove knight/target image
+  // ###############################################
   function addBackgroundKnight(event) {
     if (!event.target.style.backgroundColor) event.target.style.backgroundImage = 'url("./assets/images/knight-black.svg")'
     else event.target.style.backgroundImage = 'url("./assets/images/knight-white.svg")'
@@ -81,12 +108,24 @@ const dom = (() => {
     event.target.style.backgroundImage = 'none'
   }
 
+  function addTargetClass(event) {
+    event.target.classList.add('target')
+  }
+
+  function removeTargetClass(event) {
+    event.target.classList.remove('target')
+  }
+
+  // ################
   // Return functions
+  // ################
   return {
     createNewBoard,
     changeText,
     addBackgroundKnight,
     removeBackgroundKnight,
+    addTargetClass,
+    removeTargetClass,
   }
 })()
 
