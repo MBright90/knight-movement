@@ -45,6 +45,7 @@ function setKnightImageListeners() {
       })
       setTargetImageListeners()
       dom.changeText('Place Your Target')
+      dom.setResetActive()
     })
   })
 }
