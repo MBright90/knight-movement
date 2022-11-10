@@ -7,6 +7,7 @@ console.log(master)
 dom.createNewBoard(64)
 
 const allCells = document.querySelectorAll('.chess-cell')
+const resetButton = document.querySelector('.reset-button-container > button')
 
 function setTargetImageListeners() {
   allCells.forEach((cell) => {
@@ -49,5 +50,11 @@ function setKnightImageListeners() {
     })
   })
 }
+
+function resetAll() {
+  setKnightImageListeners()
+}
+
+resetButton.addEventListener('click', resetAll)
 
 setKnightImageListeners()
