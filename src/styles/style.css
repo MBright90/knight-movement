@@ -29,10 +29,43 @@ body {
     padding: 4%;
 }
 
+/* #############
+   Header styles
+   ############# */ 
+
 header {
     display: grid;
-    place-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    width: min(80vw, 80vh);
 }
+
+.board-size-div
+
+header > h1 {
+    text-align: center;
+    width: 100%;
+}
+
+.reset-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.reset-button-container > button {
+    background-color: inherit;
+    border: 3px solid #000;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 5px 10px;
+    text-align: right;
+}
+
+/* .reset-button-container > button:disabled */
+
+/* #################
+   Chessboard styles
+   ################# */ 
 
 .chessboard {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -59,4 +92,18 @@ header {
     background-size: contain;
     background-repeat: no-repeat;
     padding: 10%;
+    position: relative;
+}
+
+.chessboard > div > .target:after {
+    bottom: 0;
+    color: rgba(219, 44, 44);
+    content: 'X';
+    display: grid;
+    font-size: min(8vh, 8vw);
+    left: 0;
+    place-items: center;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
