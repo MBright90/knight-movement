@@ -48,6 +48,7 @@ const dom = (() => {
 
   const resetButtonContainer = createClassElement('div', 'reset-button-container')
   const resetButton = createTextElement('button', 'Reset')
+  resetButton.disabled = true
   resetButtonContainer.appendChild(resetButton)
 
   pageHeaderDiv.appendChildren(boardSelectorDiv, pageHeader, resetButtonContainer)
@@ -75,7 +76,7 @@ const dom = (() => {
   function createChessBoard(boardSize) {
     const blackCellStyle = 'background-color: #000;'
     const boardLength = Math.sqrt(boardSize)
-    const cellContainer = document.createElement('div')
+    const cellContainer = createClassElement('div', 'grid-container')
     setChessboardGrid(cellContainer, boardLength)
 
     for (let row = 0; row < boardLength; row += 1) {
@@ -116,6 +117,34 @@ const dom = (() => {
     event.target.classList.remove('target')
   }
 
+  // #######################################
+  // Functions to set status of reset button
+  // #######################################
+
+  function setResetActive() {
+    resetButton.disabled = false
+  }
+
+  function setResetDisabled() {
+    resetButton.disabled = true
+  }
+
+  // ######################################
+  // Functions to add/remove loading screen
+  // ######################################
+
+  const loadingBackground = createClassElement('div', 'loading-background')
+  const loadingIcon = createTextElement('h1', '?')
+  loadingBackground.appendChild(loadingIcon)
+
+  function showLoading() {
+    chessboardDiv.appendChild(loadingBackground)
+  }
+
+  function removeLoading() {
+    loadingBackground.remove()
+  }
+
   // ################
   // Return functions
   // ################
@@ -126,6 +155,10 @@ const dom = (() => {
     removeBackgroundKnight,
     addTargetClass,
     removeTargetClass,
+    setResetActive,
+    setResetDisabled,
+    showLoading,
+    removeLoading,
   }
 })()
 
