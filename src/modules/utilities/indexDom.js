@@ -103,10 +103,12 @@ const dom = (() => {
   function addBackgroundKnight(event) {
     if (!event.target.style.backgroundColor) event.target.style.backgroundImage = 'url("./assets/images/knight-black.svg")'
     else event.target.style.backgroundImage = 'url("./assets/images/knight-white.svg")'
+    event.target.classList.add('active')
   }
 
   function removeBackgroundKnight(event) {
     event.target.style.backgroundImage = 'none'
+    event.target.classList.remove('active')
   }
 
   function addTargetClass(event) {
@@ -115,6 +117,12 @@ const dom = (() => {
 
   function removeTargetClass(event) {
     event.target.classList.remove('target')
+  }
+
+  function resetCell(cell) {
+    cell.style.backgroundImage = 'none'
+    cell.classList.remove('active')
+    cell.classList.remove('target')
   }
 
   // #######################################
@@ -155,6 +163,7 @@ const dom = (() => {
     removeBackgroundKnight,
     addTargetClass,
     removeTargetClass,
+    resetCell,
     setResetActive,
     setResetDisabled,
     showLoading,
