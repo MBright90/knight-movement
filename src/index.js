@@ -113,3 +113,4 @@ function resetAll() {
 resetButton.addEventListener('click', resetAll)
 
 setKnightImageListeners()
+master.knightMoveRecursive('22')
