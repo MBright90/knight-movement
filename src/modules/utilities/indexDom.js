@@ -125,6 +125,30 @@ const dom = (() => {
     cell.classList.remove('target')
   }
 
+  // ################################
+  // Function to show path of knight
+  // ################################
+
+  function showKnightMoves(moveArray, previousCell = null, currentStep = 0) {
+    if (moveArray.length !== 0) {
+      const currentCoordArray = moveArray.pop().split('')
+      const currentCell = document.querySelector(`[data-x-pos="${currentCoordArray[0]}"][data-y-pos="${currentCoordArray[1]}"]`)
+      console.log(currentCell)
+
+      // Add knight image to current cell
+      if (currentCell.style.backgroundColor) currentCell.style.backgroundImage = 'url("./assets/images/knight-black.svg")'
+      else currentCell.style.backgroundImage = 'url("./assets/images/knight-white.svg")'
+
+      if (previousCell) {
+        previousCell.style.backgroundImage = 'none'
+        previousCell.classList.add('numbered')
+        previousCell.dataset.dataNum = currentStep
+      }
+      // Recursively call function on next element
+      setTimeout(showKnightMoves(moveArray, currentCell), 5000)
+    }
+  }
+
   // #######################################
   // Functions to set status of reset button
   // #######################################
@@ -168,6 +192,7 @@ const dom = (() => {
     setResetDisabled,
     showLoading,
     removeLoading,
+    showKnightMoves,
   }
 })()
 
