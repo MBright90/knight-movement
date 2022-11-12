@@ -121,8 +121,22 @@ header > h1 {
 
 .chessboard > .grid-container > .target:after {
     bottom: 0;
-    color: rgba(219, 44, 44);
+    color: rgb(219, 44, 44);
     content: 'X';
+    display: grid;
+    font-size: min(8vh, 8vw);
+    left: 0;
+    place-items: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.chessBoard > .grid-container > .numbered:after {
+    bottom: 0;
+    background-color: rgba(200, 200, 200, 0.5);
+    color: #fff;
+    content: attr(data-num);
     display: grid;
     font-size: min(8vh, 8vw);
     left: 0;
