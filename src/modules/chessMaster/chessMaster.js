@@ -37,18 +37,35 @@ export default class ChessMaster {
     return moveObject
   }
 
-  knightMoveRecursive(currentSpace, targetSpace, parentSpace = null, takenMoves = {}, queue = []) {
+  knightMoveRecursive(currentSpace, targetSpace, parentSpace = null, takenMoves = [], queue = []) {
     // base cases
     // if currentSpace is the target, return current space
     if (currentSpace === targetSpace) return [currentSpace, parentSpace]
 
     // Check if currentSpace has been checked. If not, add it to the checked spaces list
-    if (takenMoves.includes(currentSpace)) return -1
-    takenMoves.push(currentSpace)
+    if (!takenMoves.includes(currentSpace)) {
+      takenMoves.push(currentSpace)
 
-    // Retrieve the current moves for this space
-    const currentMoveSet = this.knightMoveGraph[currentSpace]
-    currentMoveSet.forEach((move) => { queue[queue.length] = move })
+      // Retrieve the current moves for this space and add the move and the parent to the queue
+      const currentMoveSet = this.knightMoveGraph[currentSpace]
+      currentMoveSet.forEach((move) => { queue[queue.length] = [move, currentSpace] })
+    }
+
+    // Retrieve the next space from the queue
+    const nextMove = queue.shift()
+    // Recursively search through the graph
+    const resultArr = this.knightMoveRecursive(
+      nextMove[0],
+      targetSpace,
+      nextMove[1],
+      takenMoves,
+      queue,
+    )
+    // If the current result arrays parent is the current space, add the space to the results array
+    if (resultArr[resultArr.length - 1][1] === currentSpace) {
+      resultArr[resultArr.length] = [currentSpace, parentSpace]
+    }
+    return resultArr
   }
 
   // Setter functions
