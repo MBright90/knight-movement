@@ -37,12 +37,14 @@ export default class ChessMaster {
     return moveObject
   }
 
-  knightMoveRecursive(currentSpace, targetSpace, parentSpace = null, takenMoves = [], queue = []) {
+  // Accepts the current space of the knight and the target space as a double digit string
+  #findShortestPath(currentSpace, targetSpace, parentSpace = null, takenMoves = [], queue = []) {
     // base cases
     // if currentSpace is the target, return current space
     if (currentSpace === targetSpace) return [currentSpace, parentSpace]
 
     // Check if currentSpace has been checked. If not, add it to the checked spaces list
+    // If it has, skip queueing move and continue to next queue position
     if (!takenMoves.includes(currentSpace)) {
       takenMoves.push(currentSpace)
 
@@ -54,7 +56,7 @@ export default class ChessMaster {
     // Retrieve the next space from the queue
     const nextMove = queue.shift()
     // Recursively search through the graph
-    const resultArr = this.knightMoveRecursive(
+    const resultArr = this.#findShortestPath(
       nextMove[0],
       targetSpace,
       nextMove[1],
@@ -62,10 +64,15 @@ export default class ChessMaster {
       queue,
     )
     // If the current result arrays parent is the current space, add the space to the results array
-    if (resultArr[resultArr.length - 1][1] === currentSpace) {
-      resultArr[resultArr.length] = [currentSpace, parentSpace]
+    if (resultArr[resultArr.length - 1] === currentSpace) {
+      if (parentSpace) resultArr[resultArr.length] = parentSpace
     }
     return resultArr
+  }
+
+  // Return function for access in instance
+  getKnightArray(position, target) {
+    return this.#findShortestPath(position, target)
   }
 
   // Setter functions
