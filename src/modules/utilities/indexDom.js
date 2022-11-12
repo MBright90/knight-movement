@@ -130,22 +130,30 @@ const dom = (() => {
   // ################################
 
   function showKnightMoves(moveArray, previousCell = null, currentStep = 0) {
+    console.log(moveArray)
     if (moveArray.length !== 0) {
       const currentCoordArray = moveArray.pop().split('')
       const currentCell = document.querySelector(`[data-x-pos="${currentCoordArray[0]}"][data-y-pos="${currentCoordArray[1]}"]`)
-      console.log(currentCell)
+
+      // Check if currentCell is target, if so, remove the target icon
+      currentCell.classList.remove('target')
 
       // Add knight image to current cell
-      if (currentCell.style.backgroundColor) currentCell.style.backgroundImage = 'url("./assets/images/knight-black.svg")'
+      if (!currentCell.style.backgroundColor) currentCell.style.backgroundImage = 'url("./assets/images/knight-black.svg")'
       else currentCell.style.backgroundImage = 'url("./assets/images/knight-white.svg")'
 
+      // Remove knight image from previous cell and add numbered step
       if (previousCell) {
         previousCell.style.backgroundImage = 'none'
-        previousCell.classList.add('numbered')
         previousCell.dataset.dataNum = currentStep
+        previousCell.classList.add('numbered')
+        currentStep += 1
       }
+
       // Recursively call function on next element
-      setTimeout(showKnightMoves(moveArray, currentCell), 5000)
+      setTimeout(() => {
+        showKnightMoves(moveArray, currentCell, currentStep)
+      }, 500)
     }
   }
 
