@@ -1,7 +1,7 @@
 export default class ChessMaster {
   constructor() {
-    this.startingPos = null
-    this.endingPos = null
+    // this.startingPos = null
+    // this.endingPos = null
     this.boardSize = 64
     this.xKnightMoves = [-2, -2, -1, -1, 1, 1, 2, 2]
     this.yKnightMoves = [-1, 1, -2, 2, -2, 2, -1, 1]
@@ -37,28 +37,18 @@ export default class ChessMaster {
     return moveObject
   }
 
-  knightMoveRecursive(currentCoord, targetCoord, takenMoves = []) {
-    // If the current coord matches the target coord return the target coord
-    if (currentCoord === targetCoord) return [targetCoord]
-    // If the current coord has already been checked within this loop return -1
-    if (takenMoves.includes(currentCoord)) return false
+  knightMoveRecursive(currentSpace, targetSpace, parentSpace = null, takenMoves = {}, queue = []) {
+    // base cases
+    // if currentSpace is the target, return current space
+    if (currentSpace === targetSpace) return [currentSpace, parentSpace]
 
-    // Add the current position to the taken Moves array
-    takenMoves[takenMoves.length] = currentCoord
+    // Check if currentSpace has been checked. If not, add it to the checked spaces list
+    if (takenMoves.includes(currentSpace)) return -1
+    takenMoves.push(currentSpace)
 
-    // Find the array of moves for the current position and recursively call function on each
-    // Returns -1 if that move has already been taken
-    const currentMoveSet = this.knightMoveGraph[currentCoord]
-
-    // Create an array to compare the return values of each possible move set
-    const compareArr = []
-    currentMoveSet.forEach((move) => {
-      const result = this.knightMoveRecursive(move, targetCoord, takenMoves)
-      if (result) compareArr[compareArr.length] = result
-    })
-    compareArr.sort((arrA, arrB) => arrA.length - arrB.length)
-    // Return the current shortest path to the target coord
-    return compareArr[0]
+    // Retrieve the current moves for this space
+    const currentMoveSet = this.knightMoveGraph[currentSpace]
+    currentMoveSet.forEach((move) => { queue[queue.length] = move })
   }
 
   // Setter functions
