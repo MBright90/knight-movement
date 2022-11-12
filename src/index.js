@@ -9,7 +9,13 @@ dom.createNewBoard(64)
 const allCells = document.querySelectorAll('.chess-cell')
 const resetButton = document.querySelector('.reset-button-container > button')
 
-function completeKnightMovement() {
+function returnChosenCoords() {
+  const knight = document.querySelector('.active')
+  const target = document.querySelector('.target')
+  return [`${knight.dataset.xPos}${knight.dataset.yPos}`, `${target.dataset.xPos}${target.dataset.yPos}`]
+}
+
+async function completeKnightMovement() {
   // Remove the event listener that place the target in a chosen cell
   // and progress the data flow of the program
   allCells.forEach((cell) => {
@@ -23,6 +29,10 @@ function completeKnightMovement() {
     })
   })
   dom.showLoading()
+  const chosenCells = returnChosenCoords()
+  const movementArray = await master.getKnightArray(chosenCells[0], chosenCells[1])
+  dom.removeLoading()
+  dom.showKnightMoves(movementArray)
 }
 
 function setTargetImageListeners() {
@@ -113,4 +123,3 @@ function resetAll() {
 resetButton.addEventListener('click', resetAll)
 
 setKnightImageListeners()
-dom.showKnightMoves((master.getKnightArray('22', '17')))
