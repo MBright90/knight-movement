@@ -3,10 +3,10 @@ import ChessMaster from './modules/chessMaster/chessMaster'
 import './styles/style.css'
 
 const master = new ChessMaster()
-console.log(master)
 dom.createNewBoard(64)
 
-const allCells = document.querySelectorAll('.chess-cell')
+let allCells = document.querySelectorAll('.chess-cell')
+const sizeSelector = document.querySelector('select')
 const resetButton = document.querySelector('.reset-button-container > button')
 
 function returnChosenCoords() {
@@ -110,16 +110,30 @@ function resetAll() {
       dom.changeText('Thinking...')
       completeKnightMovement()
     })
+    cell.classList.remove('numbered')
   })
 
   setKnightImageListeners()
   document.querySelectorAll('.active').forEach((cell) => dom.resetCell(cell))
   const targetCell = document.querySelector('.target')
   if (targetCell) dom.resetCell(targetCell)
-  dom.changeText('Place your Knight')
+
+  const activeCells = document.querySelectorAll('.active')
+  console.log(activeCells)
+  if (activeCells) activeCells.forEach((cell) => dom.resetCell(cell))
+  dom.changeText('Place Your Knight')
   dom.removeLoading()
 }
-
 resetButton.addEventListener('click', resetAll)
+
+function changeBoardSize() {
+  const newSize = sizeSelector.value
+  dom.createNewBoard(sizeSelector.value)
+  master.setBoardSize(newSize)
+  dom.changeText('Place Your Knight')
+  allCells = document.querySelectorAll('.chess-cell')
+  setKnightImageListeners()
+}
+sizeSelector.addEventListener('change', changeBoardSize)
 
 setKnightImageListeners()
