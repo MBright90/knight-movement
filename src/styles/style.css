@@ -50,7 +50,8 @@ header {
 
 .board-size-div select {
     background-color: inherit;
-    border: none;
+    border: 2px solid #000;
+    border-radius: 4px;
     font-size: 16px;
     padding: 3px;
 }
@@ -132,9 +133,9 @@ header > h1 {
     top: 0;
 }
 
-.numbered:after {
+.stepped:after {
     bottom: 0;
-    background-color: rgba(200, 200, 200, 0.8);
+    background-color: rgba(69, 53, 161, 0.8);
     color: #fff;
     content: attr(data-num);
     display: grid;
