@@ -78,7 +78,7 @@ export default class ChessMaster {
   // Setter functions
   setBoardSize(newSize) {
     this.boardSize = newSize
-    this.knightMoveGraph = this.#createKnightMoveGraph
+    this.knightMoveGraph = this.#createKnightMoveGraph()
   }
 
   // Getter functions
