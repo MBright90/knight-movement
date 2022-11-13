@@ -35,7 +35,7 @@ const dom = (() => {
 
   // Create drop down size menu
   const inputOptionElements = []
-  const boardSizeOptions = ['16', '25', '36', '49', '64 (Standard)', '91', '100']
+  const boardSizeOptions = ['64 (Standard)', '16', '25', '36', '49', '81', '100']
   boardSizeOptions.forEach((size) => {
     const newOption = createTextElement('option', size)
     newOption.setAttribute('value', parseInt(size.split(' ')[0], 10))
@@ -130,7 +130,6 @@ const dom = (() => {
   // ################################
 
   function showKnightMoves(moveArray, previousCell = null, currentStep = 0) {
-    console.log(moveArray)
     if (moveArray.length !== 0) {
       const currentCoordArray = moveArray.pop().split('')
       const currentCell = document.querySelector(`[data-x-pos="${currentCoordArray[0]}"][data-y-pos="${currentCoordArray[1]}"]`)
@@ -138,15 +137,19 @@ const dom = (() => {
       // Check if currentCell is target, if so, remove the target icon
       currentCell.classList.remove('target')
 
-      // Add knight image to current cell
+      // Add knight image and active class to current cell
+      if (currentStep > 1) changeText(`${currentStep + 1} Steps`)
+      else changeText(`${currentStep + 1} Step`)
+      currentCell.classList.add('active')
       if (!currentCell.style.backgroundColor) currentCell.style.backgroundImage = 'url("./assets/images/knight-black.svg")'
       else currentCell.style.backgroundImage = 'url("./assets/images/knight-white.svg")'
 
-      // Remove knight image from previous cell and add numbered step
+      // Remove knight image and active class from previous cell and add numbered step
       if (previousCell) {
+        previousCell.classList.remove('active')
         previousCell.style.backgroundImage = 'none'
         previousCell.dataset.dataNum = currentStep
-        previousCell.classList.add('numbered')
+        previousCell.classList.add('stepped')
         currentStep += 1
       }
 
