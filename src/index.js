@@ -15,22 +15,38 @@ function returnChosenCoords() {
   return [`${knight.dataset.xPos}${knight.dataset.yPos}`, `${target.dataset.xPos}${target.dataset.yPos}`]
 }
 
-async function completeKnightMovement() {
+function addKnightListeners(cell) {
+  cell.addEventListener('mouseover', dom.addBackgroundKnight)
+  cell.addEventListener('mouseout', dom.removeBackgroundKnight)
+}
+
+function removeKnightListeners(cell) {
+  cell.removeEventListener('mouseover', dom.addBackgroundKnight)
+  cell.removeEventListener('mouseout', dom.removeBackgroundKnight)
+}
+
+function addTargetListeners(cell) {
+  if (!cell.style.backgroundImage || cell.style.backgroundImage === 'none') {
+    cell.addEventListener('mouseover', dom.addTargetClass)
+    cell.addEventListener('mouseout', dom.removeTargetClass)
+  }
+}
+
+function removeTargetListeners(cell) {
+  cell.removeEventListener('mouseover', dom.addTargetClass)
+  cell.removeEventListener('mouseout', dom.removeTargetClass)
+}
+
+function completeKnightMovement() {
   // Remove the event listener that place the target in a chosen cell
   // and progress the data flow of the program
   allCells.forEach((cell) => {
-    cell.removeEventListener('click', () => {
-      allCells.forEach((chessCell) => {
-        chessCell.removeEventListener('mouseover', dom.addTargetClass)
-        chessCell.removeEventListener('mouseout', dom.removeTargetClass)
-      })
-      dom.changeText('Thinking...')
-      completeKnightMovement()
-    })
+    removeTargetListeners(cell)
+    cell.removeEventListener('click', completeKnightMovement)
   })
   dom.showLoading()
   const chosenCells = returnChosenCoords()
-  const movementArray = await master.getKnightArray(chosenCells[0], chosenCells[1])
+  const movementArray = master.getKnightArray(chosenCells[0], chosenCells[1])
   dom.removeLoading()
   dom.showKnightMoves(movementArray)
 }
@@ -40,55 +56,32 @@ function setTargetImageListeners() {
   // and progress the data flow of the program
   allCells.forEach((cell) => {
     cell.removeEventListener('click', () => {
-      allCells.forEach((chessCell) => {
-        chessCell.removeEventListener('mouseover', dom.addBackgroundKnight)
-        chessCell.removeEventListener('mouseout', dom.removeBackgroundKnight)
-      })
-      setTargetImageListeners()
+      allCells.forEach((chessCell) => removeKnightListeners(chessCell))
       dom.changeText('Place Your Target')
       dom.setResetActive()
     })
   })
 
   // Event listeners to show possible target locations when mouse is hovered over them
-  allCells.forEach((cell) => {
-    if (!cell.getElementsByClassName.backgroundImage) cell.addEventListener('mouseover', dom.addTargetClass)
-  })
-  allCells.forEach((cell) => {
-    cell.addEventListener('mouseout', dom.removeTargetClass)
-  })
+  allCells.forEach((cell) => addTargetListeners(cell))
 
   // Event listener to add the target mark to the chosen cell and to
   // move the data flow of the program to the movement phase
   allCells.forEach((cell) => {
-    cell.addEventListener('click', () => {
-      allCells.forEach((chessCell) => {
-        chessCell.removeEventListener('mouseover', dom.addTargetClass)
-        chessCell.removeEventListener('mouseout', dom.removeTargetClass)
-      })
-      dom.changeText('Thinking...')
-      completeKnightMovement()
-    })
+    if (!cell.style.backgroundImage || cell.style.backgroundImage === 'none') {
+      cell.addEventListener('click', completeKnightMovement)
+    }
   })
 }
 
 function setKnightImageListeners() {
   // Setting event listeners to show possible knight locations when mouse is hovered over
-  allCells.forEach((cell) => {
-    cell.addEventListener('mouseover', dom.addBackgroundKnight)
-  })
-  allCells.forEach((cell) => {
-    cell.addEventListener('mouseout', dom.removeBackgroundKnight)
-  })
-
+  allCells.forEach((cell) => addKnightListeners(cell))
   allCells.forEach((cell) => {
   // Event listener to add the knight mark to the chosen cell and to
   // move the data flow of the program to the target selection phase
     cell.addEventListener('click', () => {
-      allCells.forEach((chessCell) => {
-        chessCell.removeEventListener('mouseover', dom.addBackgroundKnight)
-        chessCell.removeEventListener('mouseout', dom.removeBackgroundKnight)
-      })
+      allCells.forEach((chessCell) => removeKnightListeners(chessCell))
       setTargetImageListeners()
       dom.changeText('Place Your Target')
       dom.setResetActive()
@@ -99,30 +92,19 @@ function setKnightImageListeners() {
 function resetAll() {
   // A flow of functions and event listener removal to completely reset the current chessboard
   // to blank. This does not reset the size of the chess board.
+  dom.endActiveMoves()
   allCells.forEach((cell) => {
-    cell.removeEventListener('mouseover', dom.addTargetClass)
-    cell.removeEventListener('mouseout', dom.removeTargetClass)
-    cell.removeEventListener('click', () => {
-      allCells.forEach((chessCell) => {
-        chessCell.removeEventListener('mouseover', dom.addTargetClass)
-        chessCell.removeEventListener('mouseout', dom.removeTargetClass)
-      })
-      dom.changeText('Thinking...')
-      completeKnightMovement()
-    })
-    cell.classList.remove('numbered')
+    removeTargetListeners(cell)
+    cell.removeEventListener('click', completeKnightMovement)
+    cell.classList.remove('stepped')
   })
 
-  setKnightImageListeners()
   document.querySelectorAll('.active').forEach((cell) => dom.resetCell(cell))
   const targetCell = document.querySelector('.target')
   if (targetCell) dom.resetCell(targetCell)
-
-  const activeCells = document.querySelectorAll('.active')
-  console.log(activeCells)
-  if (activeCells) activeCells.forEach((cell) => dom.resetCell(cell))
   dom.changeText('Place Your Knight')
   dom.removeLoading()
+  setKnightImageListeners()
 }
 resetButton.addEventListener('click', resetAll)
 
