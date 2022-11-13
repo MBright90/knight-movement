@@ -128,6 +128,7 @@ const dom = (() => {
   // ################################
   // Function to show path of knight
   // ################################
+  let timeoutMoveSet
 
   function showKnightMoves(moveArray, previousCell = null, currentStep = 0) {
     if (moveArray.length !== 0) {
@@ -154,10 +155,14 @@ const dom = (() => {
       }
 
       // Recursively call function on next element
-      setTimeout(() => {
+      timeoutMoveSet = setTimeout(() => {
         showKnightMoves(moveArray, currentCell, currentStep)
       }, 500)
     }
+  }
+
+  function endActiveMoves() {
+    clearTimeout(timeoutMoveSet)
   }
 
   // #######################################
@@ -199,6 +204,7 @@ const dom = (() => {
     addTargetClass,
     removeTargetClass,
     resetCell,
+    endActiveMoves,
     setResetActive,
     setResetDisabled,
     showLoading,
