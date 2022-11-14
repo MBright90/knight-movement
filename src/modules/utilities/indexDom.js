@@ -44,14 +44,16 @@ const dom = (() => {
   inputOptionElements.forEach((element) => boardSizeInput.appendChild(element))
   boardSelectorDiv.appendChildren(boardSizeLabel, boardSizeInput)
 
+  const headingContainer = createClassElement('div', 'heading-container')
   const pageHeader = createTextElement('h1', 'Place Your Knight')
+  headingContainer.appendChild(pageHeader)
 
   const resetButtonContainer = createClassElement('div', 'reset-button-container')
   const resetButton = createTextElement('button', 'Reset')
   resetButton.disabled = true
   resetButtonContainer.appendChild(resetButton)
 
-  pageHeaderDiv.appendChildren(boardSelectorDiv, pageHeader, resetButtonContainer)
+  pageHeaderDiv.appendChildren(boardSelectorDiv, headingContainer, resetButtonContainer)
 
   const mainDiv = document.createElement('main')
   const chessboardDiv = createClassElement('div', 'chessboard')
