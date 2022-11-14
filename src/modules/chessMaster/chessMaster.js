@@ -1,11 +1,8 @@
 export default class ChessMaster {
   constructor() {
-    // this.startingPos = null
-    // this.endingPos = null
     this.boardSize = 64
     this.xKnightMoves = [-2, -2, -1, -1, 1, 1, 2, 2]
     this.yKnightMoves = [-1, 1, -2, 2, -2, 2, -1, 1]
-
     this.knightMoveGraph = this.#createKnightMoveGraph()
   }
 
