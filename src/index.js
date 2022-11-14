@@ -105,6 +105,7 @@ function resetAll() {
   dom.changeText('Place Your Knight')
   dom.removeLoading()
   setKnightImageListeners()
+  dom.setResetDisabled()
 }
 resetButton.addEventListener('click', resetAll)
 
